@@ -10,6 +10,7 @@ st.set_page_config(
 )
 
 # Custom CSS for modern vertical card layout, color theme, and shadows
+# NOTE: changed parameter to unsafe_allow_html=True to fix the TypeError
 st.markdown("""
     <style>
     /* Main container background setup */
@@ -50,7 +51,7 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     </style>
-""", unsafe_style_html=True)
+""", unsafe_allow_html=True)
 
 # Load the trained model
 @st.cache_resource
@@ -69,14 +70,14 @@ except Exception as e:
 st.title("🎓 Student Performance Predictor")
 st.markdown(
     '<p class="subtext">Predict final academic scores cleanly using data-driven insights. Fill out the characteristics below inside our structured layout panel.</p>', 
-    unsafe_style_html=True
+    unsafe_allow_html=True
 )
 
 # Vertical Layout Section 1: Inputs grouped within a distinct visual card block
-st.markdown('<h3>📊 Academic Metrics Input</h3>', unsafe_style_html=True)
+st.markdown('<h3>📊 Academic Metrics Input</h3>', unsafe_allow_html=True)
 
 # Opening the custom container div via markdown
-st.markdown('<div class="input-card">', unsafe_style_html=True)
+st.markdown('<div class="input-card">', unsafe_allow_html=True)
 
 hours_studied = st.slider(
     "Hours Studied (per week)", 
@@ -99,7 +100,7 @@ previous_scores = st.number_input(
 )
 
 # Closing the custom container div
-st.markdown('</div>', unsafe_style_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Center alignment utility for the primary interaction button
 _, col_btn, _ = st.columns([1, 2, 1])
@@ -118,8 +119,8 @@ if predict_clicked:
             display_score = min(max(prediction, 0.0), 100.0)
             
             # Opening the custom output container block with an accent layout border
-            st.markdown('<div class="result-card">', unsafe_style_html=True)
-            st.markdown('<h3>🎯 Analysis Outcome</h3>', unsafe_style_html=True)
+            st.markdown('<div class="result-card">', unsafe_allow_html=True)
+            st.markdown('<h3>🎯 Analysis Outcome</h3>', unsafe_allow_html=True)
             
             st.metric(
                 label="Predicted Final Score Metric", 
@@ -135,10 +136,10 @@ if predict_clicked:
             else:
                 st.warning("⚠️ **Performance Risk Detected.** Predicted targets fall beneath criteria baselines. Review scheduling shifts.")
                 
-            st.markdown('</div>', unsafe_style_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"An unexpected tracking discrepancy surfaced during execution: {e}")
 else:
     # Shadow box template placeholder when state is resting
-    st.markdown('<div class="result-card" style="border-left: 5px solid #cbd5e1;"><p style="color: #94a3b8; margin: 0; text-align: center;">Awaiting processing inputs. Modify values above and trigger calculation to populate.</p></div>', unsafe_style_html=True)
+    st.markdown('<div class="result-card" style="border-left: 5px solid #cbd5e1;"><p style="color: #94a3b8; margin: 0; text-align: center;">Awaiting processing inputs. Modify values above and trigger calculation to populate.</p></div>', unsafe_allow_html=True)
